@@ -3,7 +3,7 @@ class GameSpace:
         self.xPos = xPos
         self.yPos = yPos
         self.content = content
-        self.sumValue = 0
+        self.chainSum = 0
         self.isWinning = False
 
     def print_cords(self):
@@ -21,6 +21,7 @@ class GameBoard:
     down = (0, 1)
     downLeft = (-1, 1)
     directions = (left, upLeft, up, upRight, right, downRight, down, downLeft)
+
     #   Directions:
     #   [ 1  2  3 ]
     #   [ 0  -  4 ]
@@ -37,20 +38,29 @@ class GameBoard:
     def print_board(self):
         for col in range(len(self.board)):
             for row in range(len(self.board[col])):
-                pos = self.board[row][col].print_cords()
+                pos = self.board[col][row].print_cords()
                 print(pos, end=' ')
             print("")
 
     def boardCheck(self):
         for col in range(len(self.board)):
             for row in range(len(self.board[col])):
-                self.checkNeighbors(self.board[row][col])
+                self.checkNeighbors(col, row)
 
-    def checkNeighbors(self, position):
+    def checkNeighbors(self, col, row):
         for vect in self.directions:
-            self.goNext(position, vect, 1)
+            self.board[col][row].chainSum += self.goNext(col, row, vect, 1)
 
-    def goNext(self, position, direction, chain):
-        # do a thing
-        pass
-
+    def goNext(self, col, row, direction, chain):
+        try:
+            # col += direction[0]
+            # row += direction[1]
+            if self.board[col][row].content == self.board[col + direction[0]][row + direction[1]].content:
+                chain += 1
+                self.goNext(col + direction[0], row + direction[1], direction, chain)
+            elif self.board[col + direction[0]][row + direction[1]].content != 0:
+                chain = 0
+        except IndexError:
+            chain = 0
+        finally:
+            return chain
