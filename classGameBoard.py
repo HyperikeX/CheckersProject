@@ -22,9 +22,9 @@ class GameBoard:
     downLeft = (-1, 1)
     directions = (left, upLeft, up, upRight, right, downRight, down, downLeft)
     #   Directions:
-    #   [ 0  1  2 ]
-    #   [ 7  -  3 ]
-    #   [ 6  5  4 ]
+    #   [ 1  2  3 ]
+    #   [ 0  -  4 ]
+    #   [ 7  6  5 ]
 
     def __init__(self, width, height):
         self.board = []
@@ -47,8 +47,8 @@ class GameBoard:
                 self.checkNeighbors(self.board[row][col])
 
     def checkNeighbors(self, position):
-        # check left
-        self.goNext(position, self.directions[0], 1)
+        for vect in self.directions:
+            self.goNext(position, vect, 1)
 
     def goNext(self, position, direction, chain):
         pass
