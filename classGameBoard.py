@@ -51,5 +51,6 @@ class GameBoard:
             self.goNext(position, vect, 1)
 
     def goNext(self, position, direction, chain):
+        # do a thing
         pass
 
