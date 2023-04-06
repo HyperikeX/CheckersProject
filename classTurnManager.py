@@ -31,7 +31,7 @@ class TurnManager:
             self.board.print_content()
             print("What column would you like to play in?")
             col = int(input()) - 1
-            print(f"\n\n\n\n\nYou entered: {col}")
+            print(f"\n\n\n\n\nYou entered: {col + 1}")
             if self.validateInput(col):
                 self.board.addSquare(col, self.turn)
                 return True
