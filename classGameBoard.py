@@ -59,12 +59,17 @@ class GameBoard:
                 print(f"{pos:>4s}", end=' ')
             print("")
 
+    # BoardCheck function iterates through the entire board, and calls the checkNeighbors function for every
+    # square that is non-empty.
     def boardCheck(self):
         for col in range(len(self.board)):
             for row in range(len(self.board[col])):
                 if self.board[col][row].content != 0:
                     self.checkNeighbors(col, row)
 
+    # CheckNeighbors is passed with cords for a square, then calls goNext for each direction in directions
+    # goNext sends back the chain for each direction which is added cumulatively to chainSum to evaluate
+    # how good each position is.
     def checkNeighbors(self, col, row):
         # Sets content for checking spaces
         content = self.board[col][row].content
@@ -116,3 +121,12 @@ class GameBoard:
             if chain == 4:
                 self.gameWon = True
             return chain
+
+    def addSquare(self, col, content):
+        check = 0
+        for row in range(self.maxHeight):
+            if self.board[col][row].content == 0:
+                check = check + 1
+        check = check - 1
+        self.board[col][check].content = content
+
