@@ -5,33 +5,16 @@ newBoard = classGameBoard.GameBoard(8, 8)
 newBoard.print_board()
 turnKing = classTurnManager.TurnManager(newBoard, 1)
 
-# newBoard.board[2][7].content = 1
-# newBoard.board[3][7].content = 1
-# newBoard.board[4][7].content = -1
-# newBoard.board[5][7].content = -1
-#
-# newBoard.board[2][6].content = 1
-# newBoard.board[3][6].content = -1
-# newBoard.board[4][6].content = 1
-# newBoard.board[5][6].content = -1
-#
-# newBoard.board[2][5].content = 1
-# newBoard.board[3][5].content = 1
-# newBoard.board[4][5].content = -1
-# newBoard.board[5][5].content = 1
-#
-# newBoard.board[2][4].content = 1
-# newBoard.board[3][4].content = 1
-# newBoard.board[4][4].content = -1
-#
-# newBoard.boardCheck()
-# # newBoard.checkNeighbors(3, 7)
-# print("\n\n")
-# newBoard.print_content()
-# print("\n\n")
-# newBoard.print_chainSums()
-# if newBoard.gameWon:
-#     print("The game has been won!")
-# else:
-#     print("Game has not been won yet!")
+# Will ask the user If they would like to play against a player or a bot
+choice = input("Would you like to play against another player or against a bot? ")
+if (choice == "player") or (choice == "Player"):
+    # Will execute functions needed for a 2 player game
+    newBoard = classGameBoard.GameBoard(8, 8)
+    newBoard.print_board()
+    turnKing = classTurnManager.TurnManager(newBoard, 1)
+
+elif (choice == "bot") or (choice == "Bot"):
+    # Will execute functions needed for a game against the bot
+    print("Sorry, not implemented yet!")
+
 
