@@ -1,10 +1,6 @@
 import classGameBoard
 import classTurnManager
 
-newBoard = classGameBoard.GameBoard(8, 8)
-newBoard.print_board()
-turnKing = classTurnManager.TurnManager(newBoard, 1)
-
 # Will ask the user If they would like to play against a player or a bot
 choice = input("Would you like to play against another player or against a bot? ")
 if (choice == "player") or (choice == "Player"):

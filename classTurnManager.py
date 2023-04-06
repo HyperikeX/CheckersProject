@@ -21,23 +21,22 @@ class TurnManager:
             if self.takeInput():
                 self.turn = self.turn * -1
                 self.board.boardCheck()
-            else:
-                print("Invalid selection!")
         self.board.print_content()
         print(f"Congratulations, {self.players[self.turn * -1]}, you win!")
 
     # takeInput asks user what column to play, then validates the selection. If valid, calls gameboard.addSquare
     # to place piece, flips turn, and returns success/fail state.
     def takeInput(self):
-        self.board.print_content()
-        print("What column would you like to play in?")
-        col = int(input())
-        print(f"You entered: {col}")
-        if self.validateInput(col):
-            self.board.addSquare(col, self.turn)
-            return True
-        else:
-            return False
+        while True:
+            self.board.print_content()
+            print("What column would you like to play in?")
+            col = int(input()) - 1
+            print(f"\n\n\n\n\nYou entered: {col}")
+            if self.validateInput(col):
+                self.board.addSquare(col, self.turn)
+                return True
+            else:
+                print("Invalid selection!")
 
     # validateInput checks that both the selected piece is withing the confines of the board, and
     # that the column is not already filled completely. Returns success/fail state.
