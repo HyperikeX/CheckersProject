@@ -12,5 +12,3 @@ if (choice == "player") or (choice == "Player"):
 elif (choice == "bot") or (choice == "Bot"):
     # Will execute functions needed for a game against the bot
     print("Sorry, not implemented yet!")
-
-
