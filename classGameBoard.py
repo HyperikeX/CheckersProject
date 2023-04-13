@@ -1,3 +1,5 @@
+import random
+
 class GameSpace:
     def __init__(self, xPos, yPos, content):
         self.xPos = xPos
@@ -130,3 +132,6 @@ class GameBoard:
         check = check - 1
         self.board[col][check].content = content
 
+    def chooseSpace(self):
+        num = random.randrange(self.maxWidth)
+        return num
