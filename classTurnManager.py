@@ -1,5 +1,7 @@
 from classGameBoard import GameBoard
 
+# To use turn manager, simply pass in a column to the playTurn Function. If it is a valid position,
+# then the manager will adjust the gameBoard object accordingly and switch the turn to other player
 
 class TurnManager:
     board: GameBoard
@@ -14,55 +16,41 @@ class TurnManager:
             -1: "Player 2"
         }
 
-        self.runTurn()
+    def playTurn(self, column):
+        isValid = self.takeInput(column)
+        if isValid:
+            self.turn = self.turn * -1
 
-    def runTurn(self):
-        while not self.board.gameWon:
-            if self.takeInput():
-                self.turn = self.turn * -1
-                self.board.boardCheck()
-        self.board.print_content()
-        print(f"Congratulations, {self.players[self.turn * -1]}, you win!")
-
-    # takeInput asks user what column to play, then validates the selection. If valid, calls gameboard.addSquare
+    # takeInput asks user what column to play, then validates the selection. If valid, calls gameBoard.addSquare
     # to place piece, flips turn, and returns success/fail state.
-    def takeInput(self):
+    def takeInput(self, column):
         while True:
+            # If Two Player Game
             if not self.CPU:
-                print(f"{self.players[self.turn]}, it is your turn:")
-                self.board.print_content()
-                print("What column would you like to play in?")
-                col = int(input()) - 1
-                print(f"\n\n\n\n\nYou entered: {col + 1}")
-                if self.validateInput(col):
-                    self.board.addSquare(col, self.turn)
+                if self.validateInput(column):
+                    self.board.addSquare(column, self.turn)
                     return True
                 else:
-                    print("Invalid selection!")
+                    return False
             else:
                 if self.turn == 1:
-                    print(f"{self.players[self.turn]}, it is your turn:")
-                    self.board.print_content()
-                    print("What column would you like to play in?")
-                    col = int(input()) - 1
-                    print(f"\n\n\n\n\nYou entered: {col + 1}")
-                    if self.validateInput(col):
-                        self.board.addSquare(col, self.turn)
+                    if self.validateInput(column):
+                        self.board.addSquare(column, self.turn)
                         return True
                     else:
-                        print("Invalid selection!")
+                        return False
                 else:
-                    col = self.board.chooseSpace()
-                    if self.validateInput(col):
-                        self.board.addSquare(col, self.turn)
+                    column = self.board.chooseSpace()
+                    if self.validateInput(column):
+                        self.board.addSquare(column, self.turn)
                         return True
 
     # validateInput checks that both the selected piece is withing the confines of the board, and
     # that the column is not already filled completely. Returns success/fail state.
-    def validateInput(self, col):
-        if col < 0 or col > self.board.maxWidth:
+    def validateInput(self, column):
+        if column < 0 or column > self.board.maxWidth:
             return False
-        elif self.board.board[col][0].content != 0:
+        elif self.board.board[column][0].content != 0:
             return False
         else:
             return True
