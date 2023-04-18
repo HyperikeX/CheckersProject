@@ -18,6 +18,8 @@ class TurnManager:
         }
 
     def playTurn(self, column):
+        if self.board.gameWon:
+            return
         if self.turn == 1:
             isValid = self.takeInput(column)
         if not self.CPU and self.turn == -1:

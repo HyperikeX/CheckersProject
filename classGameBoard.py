@@ -3,22 +3,16 @@ import random
 import pygame
 import pickle
 import classComputer
-spritePlayer1 = pygame.image.load("sprites/player1.png")
-spritePlayer2 = pygame.image.load("sprites/player2.png")
-spriteFrame = pygame.image.load("sprites/grid.png")
+spritePlayer1 = pygame.image.load("sprites\player1.png")
+spritePlayer2 = pygame.image.load("sprites\player2.png")
+spriteFrame = pygame.image.load("sprites\grid.png")
 
 
 class GameSpace:
-    def __init__(self, xPos, yPos, content):
-        self.xPos = xPos
-        self.yPos = yPos
+    def __init__(self, content):
         self.content = content
         self.chainSum = 0
         self.isWinning = False
-
-    def print_cords(self):
-        newString = "[" + str(self.xPos) + "," + str(self.yPos) + "]"
-        return newString
 
 
 class GameBoard:
@@ -48,7 +42,7 @@ class GameBoard:
         for col in range(width):
             newList = []
             for row in range(height):
-                newList.append(GameSpace(col, row, 0))
+                newList.append(GameSpace(0))
             self.board.append(newList)
 
     def getContents(self):
@@ -74,10 +68,10 @@ class GameBoard:
     def checkNeighbors(self, col, row):
         # Sets content for checking spaces
         content = self.board[col][row].content
-
+        print(f"testing position [{col},{row} ************")
         # For every direction, starting with left and moving clockwise, call goNext
         for vect in self.directions:
-
+            print(f"trying direction {vect}")
             newChain = self.goNext(col, row, vect, content, 1, 1)
             newChain = newChain * newChain
             self.board[col][row].chainSum += newChain
@@ -100,19 +94,22 @@ class GameBoard:
                 row += direction[1]
 
                 # If next space in direction matches color
-                if content == self.board[col][row].content:
-                    # increase chain by 1, and call for next space
-                    chain += 1
-                    chain = self.goNext(col, row, direction, content, chain, count + 1)
+                if self.inBounds(col, row):
+                    if content == self.board[col][row].content:
+                        # increase chain by 1, and call for next space
+                        chain += 1
+                        chain = self.goNext(col, row, direction, content, chain, count + 1)
 
-                # if next space is empty
-                elif self.board[col][row].content == 0:
-                    # call for next space without incrementing chain
-                    chain = self.goNext(col, row, direction, content, chain, count + 1)
+                    # if next space is empty
+                    elif self.board[col][row].content == 0:
+                        # call for next space without incrementing chain
+                        chain = self.goNext(col, row, direction, content, chain, count + 1)
 
-                # if next space has other color, kill chain, don't call next space.
-                elif self.board[col][row].content == content * -1:
-                    chain = 0
+                    # if next space has other color, kill chain, don't call next space.
+                    elif self.board[col][row].content == content * -1:
+                        chain = 0
+                else:
+                    return 0
 
         # sets chain to zero if next space goes out of bounds
         except IndexError:
@@ -121,13 +118,21 @@ class GameBoard:
             if chain == 1:
                 chain = 0
 
-            if chain == 4:
-                self.gameWon = True
-                if content == 1:
-                    self.p1Win = True
-                else:
-                    self.p2Win = True
-            return chain
+        if chain == 4:
+            self.gameWon = True
+            if content == 1:
+                self.p1Win = True
+            else:
+                self.p2Win = True
+        return chain
+
+    def inBounds(self, col, row):
+        if col < 0 or col > self.maxWidth:
+            return False
+        elif row < 0 or row > self.maxHeight:
+            return False
+        else:
+            return True
 
     def addSquare(self, col, content):
         check = 0

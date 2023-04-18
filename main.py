@@ -1,6 +1,7 @@
 import classGameBoard
 import classTurnManager
 import pygame
+import os
 
 GAME_COLUMNS = 7
 GAME_ROWS = 6
@@ -11,6 +12,7 @@ GAME_HEIGHT = GAME_ROWS * SQUARE_SIZE
 
 pygame.init()
 gameDisplay = pygame.display
+gameDisplay.set_caption("Connect 4")
 surface = gameDisplay.set_mode((GAME_WIDTH, GAME_HEIGHT))
 
 clock = pygame.time.Clock()
@@ -21,7 +23,7 @@ clock = pygame.time.Clock()
 
 newBoard = classGameBoard.GameBoard(GAME_COLUMNS, GAME_ROWS)
 # newBoard.print_board()
-manager = classTurnManager.TurnManager(newBoard, 1, True, 2)
+manager = classTurnManager.TurnManager(newBoard, 1, False, 2)
 
 
 if __name__ == "__main__":
@@ -50,13 +52,16 @@ if __name__ == "__main__":
                         manager.playTurn(0)
                     newBoard.drawBoard(GAME_COLUMNS, GAME_ROWS, surface)
                     gameDisplay.update()
+                    os.system("cls")
 
             # keysPressed = pygame.key.get_pressed()
 
             if newBoard.p1Win:
                 print("Player 1 Wins")
+                gameDisplay.set_caption("Player 1 Wins")
             if newBoard.p2Win:
                 print("Player 2 Wins")
+                gameDisplay.set_caption("Player 2 Wins")
 
 
 
