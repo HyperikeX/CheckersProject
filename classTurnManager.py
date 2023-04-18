@@ -6,10 +6,11 @@ from classGameBoard import GameBoard
 class TurnManager:
     board: GameBoard
 
-    def __init__(self, board, firstTurn, CPU=False):
+    def __init__(self, board, firstTurn, CPU=False, diff=1):
         self.turn = firstTurn
         self.board = board
         self.CPU = CPU
+        self.diff = diff
 
         self.players = {
             1: "Player 1",
@@ -17,9 +18,15 @@ class TurnManager:
         }
 
     def playTurn(self, column):
-        isValid = self.takeInput(column)
+        if self.turn == 1:
+            isValid = self.takeInput(column)
+        if not self.CPU and self.turn == -1:
+            isValid = self.takeInput(column)
+        if self.CPU and self.turn == -1:
+            isValid = self.takeInput(column)
         if isValid:
-            self.turn = self.turn * -1
+            self.turn *= -1
+            self.board.boardCheck()
 
     # takeInput asks user what column to play, then validates the selection. If valid, calls gameBoard.addSquare
     # to place piece, flips turn, and returns success/fail state.
@@ -27,30 +34,32 @@ class TurnManager:
         while True:
             # If Two Player Game
             if not self.CPU:
-                if self.validateInput(column):
+                if self.board.validateInput(column):
                     self.board.addSquare(column, self.turn)
+                    print("calling take input true")
                     return True
                 else:
+                    print("calling take input false")
                     return False
             else:
                 if self.turn == 1:
-                    if self.validateInput(column):
+                    if self.board.validateInput(column):
                         self.board.addSquare(column, self.turn)
                         return True
                     else:
                         return False
                 else:
-                    column = self.board.chooseSpace()
-                    if self.validateInput(column):
+                    column = self.board.chooseSpace(self.diff)
+                    if self.board.validateInput(column):
                         self.board.addSquare(column, self.turn)
                         return True
 
     # validateInput checks that both the selected piece is withing the confines of the board, and
     # that the column is not already filled completely. Returns success/fail state.
-    def validateInput(self, column):
-        if column < 0 or column > self.board.maxWidth:
-            return False
-        elif self.board.board[column][0].content != 0:
-            return False
-        else:
-            return True
+    # def validateInput(self, column):
+    #     if column < 0 or column > self.board.maxWidth:
+    #         return False
+    #     elif self.board.board[column][0].content != 0:
+    #         return False
+    #     else:
+    #         return True
