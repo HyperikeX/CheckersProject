@@ -10,11 +10,15 @@ GAME_WIDTH = GAME_COLUMNS * SQUARE_SIZE
 GAME_HEIGHT = GAME_ROWS * SQUARE_SIZE
 
 
+# Initialize pygame
 pygame.init()
+# Create a variable for the pygame display
 gameDisplay = pygame.display
+# The title on top of the pygame window will set to Connect 4
 gameDisplay.set_caption("Connect 4")
 surface = gameDisplay.set_mode((GAME_WIDTH, GAME_HEIGHT))
 
+# will use the clock variable later in the while loop
 clock = pygame.time.Clock()
 
 # spritePlayer1 = pygame.image.load("sprites/player1.png")
