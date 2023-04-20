@@ -11,4 +11,4 @@ Here are the steps to play Connect 4:
 6. The first player to get four in a row wins the game.
 7. To play Connect 4 with someone, you simply follow these steps while taking turns dropping your pieces onto the board. Keep in mind that you need to try to block your opponent's attempts to get four in a row while simultaneously attempting to get your own four in a row. Good luck and have fun!
 
-https://replit.com/@JesusCantu16/Connect-4#classGameBoard.py
+https://replit.com/@JesusCantu16/Connect-4
