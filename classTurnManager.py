@@ -55,13 +55,3 @@ class TurnManager:
                     if self.board.validateInput(column):
                         self.board.addSquare(column, self.turn)
                         return True
-
-    # validateInput checks that both the selected piece is withing the confines of the board, and
-    # that the column is not already filled completely. Returns success/fail state.
-    # def validateInput(self, column):
-    #     if column < 0 or column > self.board.maxWidth:
-    #         return False
-    #     elif self.board.board[column][0].content != 0:
-    #         return False
-    #     else:
-    #         return True
